@@ -1,59 +1,106 @@
 # UI Foundry Progress Component Generator
 
-Standalone visual progress generator built with Next.js.
+Standalone visual Progress generator built with Next.js, React, and TypeScript.
 
-This app is a focused progress-building studio for loading bars, completion states, labeled progress surfaces, and richer progress presentation that can be edited visually and exported as code.
+Progress indicator studio for determinate, indeterminate, buffer, step, timer-style, labelled, and accessible progressbar systems.
+
+This project is packaged as an independent component studio for marketplace sale while following the same UI Foundry product language used by the button generator. It keeps local shared controls, local presets, local export utilities, and no runtime dependency on another component app.
 
 ## Product summary
 
 This generator is designed for:
+- dashboard and upload-flow designers
+- developers building loading and completion UI
+- buyers who need semantic progress variants
 
-- designers building onboarding, dashboards, upload flows, and system feedback UI
-- developers who want editable progress components instead of rebuilding them manually
-- freelancers and agencies preparing branded progress states for client products
-- buyers who want a standalone progress tool with a visual editor and code export
+The intended workflow is:
+
+1. choose a preset or start from the default state
+2. edit the component through sectioned controls
+3. inspect the live preview in the shared dark studio canvas
+4. switch to code view when needed
+5. copy or download the generated React output
 
 ## What the product includes
 
-- section-based editing controls
+- standalone Next.js app structure
+- section-based editor shell
+- local shared controls for color, typography, inputs, sliders, switches, sections, and preview/download panels
 - live preview panel
 - code view with copy support
-- file export support
-- searchable preset library
-- generated premium preset catalog with filters, paging, and surprise-me apply
-- undo and redo controls
-- self-contained standalone app structure
-- success marker controls
-- status icon controls
+- React-only export path
+- download filename control
+- preview background controls
+- preset application flow with full-state updates
+- accessibility and state-preview guidance where native to the component
+- self-contained package files for independent repo publishing
 
-## Editing coverage
+## Native editing surface
 
-The editor currently includes these control areas:
+The editor is focused on controls that are native to Progress and useful in real product work:
+- determinate, indeterminate, buffer, query, stepped, and timer-like progress modes
+- min, max, value, buffer, valueText, accessible label, and ARIA progressbar semantics
+- track, fill, radius, thickness, stripe, success, warning, error, and status overlay treatments
+- label position, value display, icon, reduced-motion-safe animation, and state preview
+- React export sourced from the same state as the visible preview
 
-- Presets
-- Basics
-- Styling
-- Effects
-- Labels
-- Content
-- 3D
-- A11y
+The goal is maximum useful depth without adding unrelated controls that would make the component stop reading as Progress.
 
-These sections cover progress values and structure, styling, effect layers, label formatting, content treatment, depth styling, and accessibility metadata.
+## Preset model
 
-The editor also includes controls for success overlays, status icons, particles, and 3D presentation so the component can be shaped into more than a plain loading bar.
+Presets are treated as full editor states, not just color swaps. The suite-wide preset contract is:
+
+- family
+- archetype
+- variant
+- size
+- tags
+- state
+
+Applying a preset should update the complete editable state and reset transient preview state so the preview and export stay aligned.
 
 ## Export workflow
 
-The progress preview and code output follow the same current state so the exported result stays close to what the user sees in the studio.
+The shipped export contract is React-only. The live preview, visible code, copied code, and downloaded file are expected to come from the same current React payload so users do not see one result and export another.
 
-## Why this product is useful
+## Consistency contract
 
-This goes beyond a plain progress bar by turning progress styling, labels, and presentation into a configurable UI system.
+This studio is intentionally structured to be both independently sellable and merge-ready for a future UI Foundry SaaS product:
 
-## Tech
+- no runtime imports from button-component
+- no runtime imports from shared-templates
+- no runtime imports from another component studio
+- common editing tasks use the same local control patterns as the button canon
+- shared state names such as previewResetKey, previewBgMode, previewBgInput, and downloadName are preserved where applicable
+
+## Tech stack
 
 - Next.js
 - React
 - TypeScript
+- Tailwind CSS
+- local component/editor utilities
 
+## Commands
+
+    npm install
+    npm run typecheck
+    npm run lint -- --quiet
+    npm run build
+    npm run dev
+
+## Verification checklist
+
+Before publishing a new version, verify:
+
+- install completes without dependency errors
+- typecheck passes
+- lint has no blocking errors
+- production build completes
+- preview and generated React code match
+- copied code and downloaded code match the visible code
+- no generated node_modules, .next, or build artifacts are committed
+
+## Repository
+
+This repo is intended to publish as Abid-Al-Hossain/UI_progress.
