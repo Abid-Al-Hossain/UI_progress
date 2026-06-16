@@ -148,6 +148,26 @@ export type ProgressState = {
   ariaDescribedBy: string;
   ariaValueText: string;
 
+  // Focus Ring
+  focusRingEnabled: boolean;
+  focusRingWidth: number;
+  focusRingOffset: number;
+  focusRingColor: string;
+
+  // Transitions
+  transitionDuration: number;
+  transitionEasing: "ease" | "ease-in" | "ease-out" | "ease-in-out" | "linear";
+
+  // Disabled state
+  disabled: boolean;
+  disabledOpacity: number;
+  disabledCursor: "not-allowed" | "default" | "pointer";
+
+  // Explicit step colors (steps mode)
+  stepsCompletedColor: string;
+  stepsActiveColor: string;
+  stepsInactiveColor: string;
+
   // Meta
   downloadName?: string;
 };
@@ -265,5 +285,22 @@ export const INITIAL_PROGRESS_STATE: ProgressState = {
   ariaLabel: "Progress",
   ariaDescribedBy: "",
   ariaValueText: "",
+
+  focusRingEnabled: false,
+  focusRingWidth: 2,
+  focusRingOffset: 2,
+  focusRingColor: "#38bdf8",
+
+  transitionDuration: 200,
+  transitionEasing: "ease",
+
+  disabled: false,
+  disabledOpacity: 0.5,
+  disabledCursor: "not-allowed",
+
+  stepsCompletedColor: "#3b82f6",
+  stepsActiveColor: "#8b5cf6",
+  stepsInactiveColor: "#e2e8f0",
+
   downloadName: "progress-bar",
 };

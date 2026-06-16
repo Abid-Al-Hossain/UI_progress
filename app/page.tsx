@@ -34,6 +34,7 @@ import AccessibilitySection from "./_section/AccessibilitySection";
 import StatusSection from "./_section/StatusSection";
 import ThreeDSection from "./_section/ThreeDSection";
 import StatePreviewSection from "./_section/StatePreviewSection";
+import StatesSection from "./_section/StatesSection";
 export default function ProgressBarPlayground() {
   const mounted = useHydrated();
   const [previewResetKey, setPreviewResetKey] = useState(0);
@@ -126,6 +127,8 @@ export default function ProgressBarPlayground() {
         );
       case "accessibility":
         return <AccessibilitySection />;
+      case "states":
+        return <StatesSection state={state} update={handleUpdate} />;
       default:
         return null;
     }
@@ -147,6 +150,7 @@ export default function ProgressBarPlayground() {
     { id: "labels", label: "Labels" },
     { id: "content", label: "Content" },
     { id: "accessibility", label: "Accessibility" },
+    { id: "states", label: "States" },
   ];
 
   const controls = (

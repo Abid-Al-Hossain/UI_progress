@@ -171,7 +171,33 @@ export function ProgressPreview({ state }: { state: ProgressState }) {
     ariaDescribedBy,
     ariaValueText,
     enable3D,
+    focusRingEnabled,
+    focusRingWidth,
+    focusRingOffset,
+    focusRingColor,
+    transitionDuration,
+    transitionEasing,
+    disabled,
+    disabledOpacity,
+    disabledCursor,
+    stepsCompletedColor,
+    stepsActiveColor,
+    stepsInactiveColor,
   } = state;
+  const [isFocused, setIsFocused] = React.useState(false);
+  const wrapperStyle: React.CSSProperties = {
+    opacity: disabled ? disabledOpacity : 1,
+    pointerEvents: disabled ? "none" : undefined,
+    cursor: disabled ? disabledCursor : undefined,
+    transition: transitionDuration > 0 ? `opacity ${transitionDuration}ms ${transitionEasing}` : undefined,
+    outline: isFocused && focusRingEnabled ? `${focusRingWidth}px solid ${focusRingColor}` : undefined,
+    outlineOffset: isFocused && focusRingEnabled ? focusRingOffset : undefined,
+  };
+  const wrapperProps = {
+    tabIndex: focusRingEnabled && !disabled ? 0 : undefined,
+    onFocus: () => setIsFocused(true),
+    onBlur: () => setIsFocused(false),
+  };
 
   const percent = Math.min(
     100,
@@ -291,7 +317,7 @@ export function ProgressPreview({ state }: { state: ProgressState }) {
   // --- 3D RENDERER ---
   if (enable3D) {
     return (
-      <div className="relative flex flex-col items-center justify-center">
+      <div className="relative flex flex-col items-center justify-center" style={wrapperStyle} {...wrapperProps}>
         {showStatusLabel && statusLabelPosition === "above" ? (
           <div
             className="mb-3 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide"
@@ -398,7 +424,7 @@ export function ProgressPreview({ state }: { state: ProgressState }) {
     .join(", ");
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <div className="relative flex flex-col items-center justify-center" style={wrapperStyle} {...wrapperProps}>
       {showStatusLabel && statusLabelPosition === "above" ? (
         <div
           className="mb-3 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide"
@@ -547,16 +573,23 @@ export function ProgressPreview({ state }: { state: ProgressState }) {
           >
             {[...Array(stepCount)].map((_, i) => {
               const stepPercent = ((i + 1) / stepCount) * 100;
+              const prevStepPercent = (i / stepCount) * 100;
               const isFilled = percent >= stepPercent;
+              const isCurrentStep = !isFilled && percent > prevStepPercent;
+              const stepBackground = isFilled
+                ? stepsCompletedColor
+                : isCurrentStep
+                  ? stepsActiveColor
+                  : "transparent";
               return (
                 <div
                   key={i}
                   style={{
                     flex: 1,
-                    background: isFilled ? fillBackground : "transparent",
+                    background: stepBackground,
                     borderRadius: barRadius / 2,
-                    transition: "background 0.2s ease",
-                    border: `1px solid ${isFilled ? "transparent" : trackColor}`,
+                    transition: transitionDuration > 0 ? `background ${transitionDuration}ms ${transitionEasing}` : "background 0.2s ease",
+                    border: `1px solid ${isFilled || isCurrentStep ? "transparent" : stepsInactiveColor}`,
                   }}
                 />
               );

@@ -113,9 +113,26 @@ export default function ProgressBar({
   const successPercentValue = CONFIG.successPercent > 0
     ? clampPercent(CONFIG.successPercent, min, max)
     : 0;
+  const [isFocused, setIsFocused] = React.useState(false);
 
   return (
-    <div style={{ position: "relative", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+    <div
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: CONFIG.disabled ? CONFIG.disabledOpacity : 1,
+        pointerEvents: CONFIG.disabled ? "none" : undefined,
+        cursor: CONFIG.disabled ? CONFIG.disabledCursor : undefined,
+        transition: CONFIG.transitionDuration > 0 ? \`opacity \${CONFIG.transitionDuration}ms \${CONFIG.transitionEasing}\` : undefined,
+        outline: isFocused && CONFIG.focusRingEnabled ? \`\${CONFIG.focusRingWidth}px solid \${CONFIG.focusRingColor}\` : undefined,
+        outlineOffset: isFocused && CONFIG.focusRingEnabled ? CONFIG.focusRingOffset : undefined,
+      }}
+      tabIndex={CONFIG.focusRingEnabled && !CONFIG.disabled ? 0 : undefined}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+    >
       <div
         role="progressbar"
         aria-valuenow={mode === "indeterminate" ? undefined : Math.round(value)}
@@ -189,15 +206,19 @@ export default function ProgressBar({
           >
             {Array.from({ length: CONFIG.stepCount }).map((_, i) => {
               const stepPercent = ((i + 1) / CONFIG.stepCount) * 100;
+              const prevStepPercent = (i / CONFIG.stepCount) * 100;
               const isFilled = progressPercent >= stepPercent;
+              const isCurrentStep = !isFilled && progressPercent > prevStepPercent;
+              const stepBackground = isFilled ? CONFIG.stepsCompletedColor : isCurrentStep ? CONFIG.stepsActiveColor : "transparent";
               return (
                 <div
                   key={i}
                   style={{
                     flex: 1,
                     borderRadius: "${Math.max(2, Math.floor(borderRadius / 2))}px",
-                    background: isFilled ? "${fillBackground}" : "transparent",
-                    border: \`1px solid \${isFilled ? "transparent" : CONFIG.trackColor}\`,
+                    background: stepBackground,
+                    transition: CONFIG.transitionDuration > 0 ? \`background \${CONFIG.transitionDuration}ms \${CONFIG.transitionEasing}\` : "background 0.2s ease",
+                    border: \`1px solid \${isFilled || isCurrentStep ? "transparent" : CONFIG.stepsInactiveColor}\`,
                   }}
                 />
               );
