@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import ContrastGuard from "@/components/shared/color/ContrastGuard";
 import AppShell from "@/components/shared/layout/AppShell";
 import { PlaygroundLayout } from "@/components/shared/layout/PlaygroundLayout";
 import PreviewDownloadPanel from "@/components/shared/layout/SharedPreviewDownloadPanel";
@@ -205,7 +206,6 @@ export default function ProgressBarPlayground() {
       code={exportCode.content}
     />
   );
-
   return (
     <AppShell contentOverflow="hidden">
       <PlaygroundLayout
@@ -214,7 +214,8 @@ export default function ProgressBarPlayground() {
         controls={controls}
         preview={preview}
       />
-    </AppShell>
+
+<ContrastGuard /></AppShell>
   );
 }
 
