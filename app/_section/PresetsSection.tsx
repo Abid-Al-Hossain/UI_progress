@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SectionCard, LabeledField, Segmented } from "@/components/shared/layout/ui";
+import { SectionCard, LabeledField, FilterSelect } from "@/components/shared/layout/ui";
 import Select from "@/components/shared/input/Select";
 import type { ProgressPreset } from "../_data/progressPresets";
 import type { ProgressState } from "../types";
@@ -249,7 +249,7 @@ export default function PresetsSection({
           </LabeledField>
 
           <LabeledField label="Mode">
-            <Segmented
+            <FilterSelect
               value={modeFilter}
               onChange={(value: string) => {
                 setPageDirection(0);
