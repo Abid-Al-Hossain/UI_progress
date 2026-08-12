@@ -55,7 +55,7 @@ export default function StatusSection({ state, update }: Props) {
               <ControlGroup label="Status Label">
                 <InputControl
                   value={state.statusLabel}
-                  onChange={(e) => update("statusLabel", e.target.value)}
+                  onChange={(value) => update("statusLabel", value)}
                   placeholder="e.g. Uploading, On track, At risk"
                 />
               </ControlGroup>

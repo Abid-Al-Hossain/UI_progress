@@ -16,7 +16,7 @@ export default function MetadataSection({ state, update }: Props) {
         <ControlGroup label="Aria Label">
           <InputControl
             value={state.ariaLabel}
-            onChange={(e) => update("ariaLabel", e.target.value)}
+            onChange={(value) => update("ariaLabel", value)}
             placeholder="e.g. File upload progress"
           />
         </ControlGroup>
@@ -24,7 +24,7 @@ export default function MetadataSection({ state, update }: Props) {
         <ControlGroup label="Aria Described By (ID)">
           <InputControl
             value={state.ariaDescribedBy}
-            onChange={(e) => update("ariaDescribedBy", e.target.value)}
+            onChange={(value) => update("ariaDescribedBy", value)}
             placeholder="e.g. progress-description"
           />
         </ControlGroup>
@@ -32,7 +32,7 @@ export default function MetadataSection({ state, update }: Props) {
         <ControlGroup label="Aria Value Text">
           <InputControl
             value={state.ariaValueText}
-            onChange={(e) => update("ariaValueText", e.target.value)}
+            onChange={(value) => update("ariaValueText", value)}
             placeholder="e.g. 72 percent uploaded"
           />
         </ControlGroup>
